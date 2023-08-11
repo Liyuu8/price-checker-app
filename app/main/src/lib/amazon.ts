@@ -7,9 +7,10 @@ export const getAmazon = async (url: string) => {
     const domBody = new JSDOM(resp.data);
     const document = domBody.window.document;
 
-    const name = document
-      .querySelector('span#productTitle')
-      ?.textContent?.replace(/(?:\r\n|\r|\n)/g, '');
+    const name =
+      document
+        .querySelector('span#productTitle')
+        ?.textContent?.replace(/(?:\r\n|\r|\n)/g, '') ?? '';
 
     const priceBlocks = [
       'span#priceblock_dealprice',
@@ -31,6 +32,7 @@ export const getAmazon = async (url: string) => {
 
     return {
       result: true,
+      message: 'success!!',
       data: {
         target: url,
         site: 'amazon.co.jp',
@@ -41,7 +43,8 @@ export const getAmazon = async (url: string) => {
   } catch (e: any) {
     return {
       result: false,
-      message: e.message,
+      message: e.message as string,
+      data: null,
     };
   }
 };

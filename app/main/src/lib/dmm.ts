@@ -6,7 +6,7 @@ const regex = /\/detail\/(=\/(title_id|cid)=(.*)|(.*))\//g;
 export const getDmm = async (url: string) => {
   const apiId = process.env.DMM_API_ID;
   const affiliateId = process.env.DMM_AFFILIATE_ID;
-  const failed = (message: string) => ({ result: false, message });
+  const failed = (message: string) => ({ result: false, message, data: null });
 
   if (!apiId || !affiliateId) return failed('API or affiliate id not found');
 
@@ -29,10 +29,11 @@ export const getDmm = async (url: string) => {
 
     return {
       result: true,
+      message: 'success!!',
       data: {
         target: url,
         site,
-        name: item.title,
+        name: item.title as string,
         price: parseInt(item.prices.price),
       },
     };

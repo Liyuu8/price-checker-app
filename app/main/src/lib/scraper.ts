@@ -13,5 +13,6 @@ export const getData = async (url: string) => {
   return {
     result: false,
     message: 'target not found',
+    data: null,
   };
 };
