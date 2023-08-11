@@ -1,4 +1,5 @@
 import axios from 'axios';
+import 'dotenv/config';
 
 const regex = /\/detail\/(=\/(title_id|cid)=(.*)|(.*))\//g;
 
@@ -10,12 +11,12 @@ export const getDmm = async (url: string) => {
   if (!apiId || !affiliateId) return failed('API or affiliate id not found');
 
   const results = [...url.matchAll(regex)];
-  if (results.length <= 0) return failed('url parse failed(matchAll)');
+  if (results.length <= 0) return failed('url parse failed (matchAll)');
 
   const cid = [results[0][3], results[0][4]].find(
-    (result) => typeof result === 'undefined'
+    (result) => typeof result !== 'undefined'
   );
-  if (!cid) return failed('url parse failed(regex group not found)');
+  if (!cid) return failed('url parse failed (regex group not found)');
 
   const isDmm = url.indexOf('dmm.co.jp') === -1;
   const site = isDmm ? 'DMM.com' : 'FANZA';

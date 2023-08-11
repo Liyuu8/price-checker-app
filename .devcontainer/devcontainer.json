@@ -1,0 +1,28 @@
+{
+  "name": "Price Checker App",
+  "dockerComposeFile": [
+    "docker-compose.yml"
+  ],
+  "workspaceFolder": "/app/main",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "prettier.requireConfig": true,
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "vscode.json-language-features"
+        }
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "MS-CEINTL.vscode-language-pack-ja"
+      ]
+    }
+  }
+}
