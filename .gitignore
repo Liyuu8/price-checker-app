@@ -1,3 +1,5 @@
 node_modules
+.DS_Store
 
 .env
+gcp-scraping-books-7de858e35b2d.json

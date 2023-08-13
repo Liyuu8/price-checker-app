@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "checker/function.js",
   "scripts": {
+    "check-db": "nodemon --exec ts-node src/check_db.ts amazon.co.jp",
     "check-amazon": "nodemon --exec ts-node src/check_run.ts https://www.amazon.co.jp/dp/B08VRFN9ZL/",
     "check-dmm": "nodemon --exec ts-node src/check_run.ts https://book.dmm.com/detail/b900xkds00566/"
   },
