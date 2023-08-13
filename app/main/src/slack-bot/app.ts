@@ -25,7 +25,7 @@ app.message(/add_price:(.+)/, async ({ say, context }) => {
     const response = `Registered! Title:${result.data.name} Price:${result.data.price}`;
     console.log(response);
     await say(response);
-  } catch (e) {
+  } catch (e: any) {
     console.log(e);
     await say(e.message);
   }
