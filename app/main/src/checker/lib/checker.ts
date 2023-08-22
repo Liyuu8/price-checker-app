@@ -39,7 +39,7 @@ export const runChecker = async (site: string) => {
             });
           }
           if (process.env.NOTICE_DISCORD_CHANNEL) {
-            await discordClient.login(process.env.DISCORD_TOKEN);
+            await discordClient.login(process.env.NOTICE_DISCORD_TOKEN);
             const channel = await discordClient.channels.fetch(
               process.env.NOTICE_DISCORD_CHANNEL
             );
