@@ -10,7 +10,8 @@ export const getAmazon = async (url: string) => {
     const name =
       document
         .querySelector('span#productTitle')
-        ?.textContent?.replace(/(?:\r\n|\r|\n)/g, '') ?? '';
+        ?.textContent?.replace(/(?:\r\n|\r|\n)/g, '')
+        .trimStart() ?? '';
 
     const priceBlocks = [
       'span#priceblock_dealprice',
@@ -18,6 +19,7 @@ export const getAmazon = async (url: string) => {
       'span#price',
       'span#kindle-price',
       'span#priceblock_saleprice',
+      'span.a-price-whole',
     ];
 
     const price =

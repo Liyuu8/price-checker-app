@@ -1,5 +1,6 @@
 import { exit } from 'process';
 import { runChecker } from './checker';
+import { log } from 'console';
 
 (async () => {
   try {
@@ -9,10 +10,10 @@ import { runChecker } from './checker';
     const result = await runChecker(process.env.CHECKER_SITE);
     if (!result.result) throw new Error(result.message);
 
-    console.log(result);
+    log(result);
     exit(0);
   } catch (e) {
-    console.log(e);
+    log(e);
     exit(1);
   }
 })();

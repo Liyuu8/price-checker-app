@@ -2,6 +2,7 @@ import { Firestore } from '@google-cloud/firestore';
 import { WebClient } from '@slack/web-api';
 import { Client, IntentsBitField, TextChannel } from 'discord.js';
 import { getData } from '../../lib/scraper';
+import { log } from 'console';
 
 export const runChecker = async (site: string) => {
   const firestore = new Firestore();
@@ -17,16 +18,16 @@ export const runChecker = async (site: string) => {
       dataRef.docs.map(async (doc) => {
         const currentData = doc.data();
         const currentLog = `Title: ${currentData.name} Price: ${currentData.price}`;
-        console.log('[currentLog]', currentLog);
+        log('[currentLog]', currentLog);
 
         const newData = await getData(currentData.target);
         if (!newData.result || !newData.data) {
-          console.log(`Failed ${currentLog}`);
+          log(`Failed ${currentLog}`);
           return;
         }
 
         const newLog = `${currentLog} => ${newData.data.price}`;
-        console.log(newLog);
+        log(newLog);
 
         if (currentData.price !== newData.data.price) {
           const chatMessage = `Price changed! ${newLog} Target: ${newData.data.target}`;
@@ -53,7 +54,7 @@ export const runChecker = async (site: string) => {
 
     return { result: true, message: 'success!!' };
   } catch (e: any) {
-    console.log(e);
+    log(e);
 
     return { result: false, message: e.message as string };
   }

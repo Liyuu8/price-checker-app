@@ -2,19 +2,24 @@ import { Firestore } from '@google-cloud/firestore';
 import { Client, IntentsBitField } from 'discord.js';
 import { v4 as uuidv4 } from 'uuid';
 import { getData } from '../lib/scraper';
+import { log } from 'console';
 
 const client = new Client({
-  intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
+  intents: [
+    IntentsBitField.Flags.Guilds,
+    IntentsBitField.Flags.GuildMessages,
+    IntentsBitField.Flags.MessageContent,
+  ],
 });
 const firestore = new Firestore();
 
-client.on('ready', () => console.log('App is started'));
+client.on('ready', () => log('App is started'));
 
 client.on('messageCreate', async (message) => {
   const content = message.content;
   content === 'ping' && message.channel.send('pong');
 
-  const regExp = /add_price:(.+)/;
+  const regExp = /add_price: (.+)/;
   const regExpResultList = regExp.exec(content);
   if (
     !(regExp.test(content) && regExpResultList && regExpResultList?.length >= 2)
@@ -28,11 +33,11 @@ client.on('messageCreate', async (message) => {
 
     const collection = firestore.collection('price_checker');
     await collection.doc(uuidv4()).set(result.data);
-    const response = `Registered! Title:${result.data.name} Price:${result.data.price}`;
-    console.log(response);
+    const response = `Registered!\n\`\`\`Title: ${result.data.name}\n\nPrice: ${result.data.price}\`\`\``;
+    log(response);
     message.channel.send(response);
   } catch (e: any) {
-    console.log(e);
+    log(e);
     message.channel.send(e.message);
   }
 });

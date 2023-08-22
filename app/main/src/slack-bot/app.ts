@@ -2,6 +2,7 @@ import { Firestore } from '@google-cloud/firestore';
 import { App } from '@slack/bolt';
 import { v4 as uuidv4 } from 'uuid';
 import { getData } from '../lib/scraper';
+import { log } from 'console';
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
@@ -14,7 +15,7 @@ app.message('ping', async ({ say }) => {
   await say('pong');
 });
 
-app.message(/add_price:(.+)/, async ({ say, context }) => {
+app.message(/add_price: (.+)/, async ({ say, context }) => {
   try {
     const url = context.matches[1].slice(1).slice(0, -1).split('|')[0];
     const result = await getData(url);
@@ -22,16 +23,16 @@ app.message(/add_price:(.+)/, async ({ say, context }) => {
 
     const collection = firestore.collection('price_checker');
     await collection.doc(uuidv4()).set(result.data);
-    const response = `Registered! Title:${result.data.name} Price:${result.data.price}`;
-    console.log(response);
+    const response = `Registered!\n\`\`\`Title: ${result.data.name}\n\nPrice: ${result.data.price}\`\`\``;
+    log(response);
     await say(response);
   } catch (e: any) {
-    console.log(e);
+    log(e);
     await say(e.message);
   }
 });
 
 (async () => {
-  console.log('App is started');
+  log('App is started');
   await app.start(process.env.PORT || 3000);
 })();
