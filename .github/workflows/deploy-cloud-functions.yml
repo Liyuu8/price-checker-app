@@ -19,9 +19,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - run: |
-        yarn install
-        yarn build
+    - run: yarn install
+
+    - run: yarn build
 
     - id: auth
       uses: google-github-actions/auth@v1

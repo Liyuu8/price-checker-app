@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/function.js",
   "scripts": {
     "build": "npx tsc",
     "check-db": "nodemon --exec ts-node src/test/check_db.ts amazon.co.jp",
