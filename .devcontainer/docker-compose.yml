@@ -16,4 +16,4 @@ services:
     # 起動時のカレントフォルダ
     working_dir: /app
     # 起動後に実行するコマンド
-    command: sh -c 'npx tsc; npm run dev'
+    command: sh -c 'npx tsc'

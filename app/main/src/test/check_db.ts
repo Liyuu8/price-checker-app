@@ -1,5 +1,5 @@
 import { log } from 'console';
-import { runChecker } from './checker/lib/checker';
+import { runChecker } from '../checker/checker';
 
 const argv = process.argv.slice(2);
 

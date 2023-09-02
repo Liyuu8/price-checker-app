@@ -1,22 +1,19 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "main": "checker/function.js",
+  "main": "dist/index.js",
   "scripts": {
-    "check-db": "nodemon --exec ts-node src/check_db.ts amazon.co.jp",
-    "check-amazon": "nodemon --exec ts-node src/check_run.ts https://www.amazon.co.jp/dp/B08VRFN9ZL/",
-    "check-dmm": "nodemon --exec ts-node src/check_run.ts https://book.dmm.com/detail/b900xkds00566/",
-    "check-slack-bot": "nodemon --exec ts-node src/slack-bot/app.ts",
+    "build": "npx tsc",
+    "check-db": "nodemon --exec ts-node src/test/check_db.ts amazon.co.jp",
+    "check-amazon": "nodemon --exec ts-node src/test/check_run.ts https://www.amazon.co.jp/dp/B08VRFN9ZL/",
+    "check-dmm": "nodemon --exec ts-node src/test/check_run.ts https://book.dmm.com/detail/b900xkds00566/",
     "check-discord-bot": "nodemon --exec ts-node src/discord-bot/app.ts"
   },
   "dependencies": {
     "@google-cloud/firestore": "^6.7.0",
-    "@slack/bolt": "^3.13.3",
-    "@slack/web-api": "^6.9.0",
     "axios": "^1.4.0",
     "discord.js": "^14.12.1",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2",
     "jsdom": "^22.1.0",
     "typescript": "^5.1.6",
     "uuid": "^9.0.0"

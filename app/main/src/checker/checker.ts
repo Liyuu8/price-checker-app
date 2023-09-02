@@ -1,12 +1,10 @@
 import { Firestore } from '@google-cloud/firestore';
-import { WebClient } from '@slack/web-api';
 import { Client, IntentsBitField, TextChannel } from 'discord.js';
-import { getData } from '../../lib/scraper';
+import { getData } from '../lib/scraper';
 import { log } from 'console';
 
 export const runChecker = async (site: string) => {
   const firestore = new Firestore();
-  const slackCliend = new WebClient();
   const discordClient = new Client({ intents: [IntentsBitField.Flags.Guilds] });
 
   try {
@@ -32,15 +30,8 @@ export const runChecker = async (site: string) => {
         if (currentData.price !== newData.data.price) {
           const chatMessage = `Price changed! ${newLog} Target: ${newData.data.target}`;
 
-          if (process.env.NOTICE_SLACK_CHANNEL) {
-            await slackCliend.chat.postMessage({
-              token: process.env.NOTICE_SLACK_TOKEN,
-              channel: process.env.NOTICE_SLACK_CHANNEL,
-              text: chatMessage,
-            });
-          }
           if (process.env.NOTICE_DISCORD_CHANNEL) {
-            await discordClient.login(process.env.NOTICE_DISCORD_TOKEN);
+            await discordClient.login(process.env.DISCORD_TOKEN);
             const channel = await discordClient.channels.fetch(
               process.env.NOTICE_DISCORD_CHANNEL
             );

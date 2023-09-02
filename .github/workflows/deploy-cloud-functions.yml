@@ -1,0 +1,41 @@
+name: Deploy Cloud Funcstions
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - run: yarn install
+    - run: yarn build
+
+    - id: auth
+      uses: google-github-actions/auth@v1
+      with:
+        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.SERVICE_ACCOUNT }}
+
+    - id: deploy
+      uses: google-github-actions/deploy-cloud-functions@v1
+      with:
+        name: price-checker-function
+        runtime: nodejs16
+        memory_mb: 256
+        region: asia-northeast1
+        timeout: 120
+        service_account_email: ${{ secrets.APP_SERVICE_ACCOUNT }}
+        env_vars: >-
+          DMM_API_ID=${{ secrets.DMM_API_ID }},
+          DMM_AFFILIATE_ID=${{ secrets.DMM_AFFILIATE_ID }},
+          DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }},
+          NOTICE_DISCORD_CHANNEL=${{ secrets.NOTICE_DISCORD_CHANNEL }}
