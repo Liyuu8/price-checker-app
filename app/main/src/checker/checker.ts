@@ -20,8 +20,7 @@ export const runChecker = async (site: string) => {
 
         const newData = await getData(currentData.target);
         if (!newData.result || !newData.data) {
-          log(`Failed ${currentLog}`);
-          return;
+          return { result: false, message: `Failed ${currentLog}` };
         }
 
         const newLog = `${currentLog} => ${newData.data.price}`;
@@ -29,13 +28,15 @@ export const runChecker = async (site: string) => {
 
         if (currentData.price !== newData.data.price) {
           const chatMessage = `Price changed! ${newLog} Target: ${newData.data.target}`;
+          const channelId = process.env.NOTICE_DISCORD_CHANNEL;
+          const token = process.env.DISCORD_TOKEN;
 
-          if (process.env.NOTICE_DISCORD_CHANNEL) {
-            await discordClient.login(process.env.DISCORD_TOKEN);
-            const channel = await discordClient.channels.fetch(
-              process.env.NOTICE_DISCORD_CHANNEL
-            );
+          if (token && channelId) {
+            await discordClient.login(token);
+            const channel = await discordClient.channels.fetch(channelId);
             channel && (channel as TextChannel).send(chatMessage);
+          } else {
+            return { result: false, message: 'token or channel id not found' };
           }
 
           await collection.doc(doc.id).set(newData.data);
