@@ -34,7 +34,7 @@ jobs:
       with:
         name: price-checker-function
         runtime: nodejs16
-        memory_mb: 256
+        memory_mb: 512
         region: asia-northeast1
         timeout: 120
         source_dir: app/main
