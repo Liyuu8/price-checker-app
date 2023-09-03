@@ -37,6 +37,7 @@ jobs:
         memory_mb: 256
         region: asia-northeast1
         timeout: 120
+        source_dir: app/main
         entry_point: updatePriceEntryPoint
         service_account_email: ${{ secrets.APP_SERVICE_ACCOUNT }}
         env_vars: >-
